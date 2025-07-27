@@ -29,9 +29,18 @@ class SwerveModule:
         """
 
         """ Initialize Spark Max motor controllers"""
-        self.drivingSparkMax: rev.SparkFlex = rev.SparkFlex(driveMotorChannel, rev.SparkMax.MotorType.kBrushless)
+        self.drivingSparkMax: rev.SparkFlex = rev.SparkFlex(driveMotorChannel, rev.SparkFlex.MotorType.kBrushless)
         self.turningSparkMax: rev.SparkMax = rev.SparkMax(turningMotorChannel, rev.SparkMax.MotorType.kBrushless)
 
+        self.drivingConfig = rev.SparkBaseConfig()
+        self.turningConfig = rev.SparkBaseConfig()
+
+        self.drivingConfig.setIdleMode(rev.SparkBaseConfig.IdleMode.kBrake)
+        self.turningConfig.setIdleMode(rev.SparkBaseConfig.IdleMode.kBrake)
+        
+        
+        self.drivingSparkMax.configure(self.drivingConfig, resetMode=rev.SparkBase.ResetMode.kNoResetSafeParameters, persistMode=rev.SparkBase.PersistMode.kPersistParameters)
+        self.turningSparkMax.configure(self.turningConfig, resetMode=rev.SparkBase.ResetMode.kNoResetSafeParameters, persistMode=rev.SparkBase.PersistMode.kPersistParameters)
         # Factory reset, so we get the SPARKS MAX to a known state before configuring
         # them. This is useful in case a SPARK MAX is swapped out.
         #self.drivingSparkMax.restoreFactoryDefaults()
@@ -92,7 +101,7 @@ class SwerveModule:
         # self.turningPIDController.setOutputRange(constants.kTurningMinOutput, constants.kTurningMaxOutput)
 
         # """ Spark Max Mode Parameters"""
-        # self.drivingSparkMax.setIdleMode(constants.kDrivingMotorIdleMode)
+        #self.drivingSparkMax.setIdleMode(constants.kDrivingMotorIdleMode)
         # self.turningSparkMax.setIdleMode(constants.kTurningMotorIdleMode)
         # self.drivingSparkMax.setSmartCurrentLimit(constants.kDrivingMotorCurrentLimit)
         # self.turningSparkMax.setSmartCurrentLimit(constants.kDrivingMotorCurrentLimit)
@@ -144,10 +153,10 @@ class SwerveModule:
         )
 
         # Command driving and turning SPARK MAX toward their respective setpoints
-        # self.drivingPIDController.setReference(optimizedDesiredState.speed, rev.SparkMax.ControlType.kVelocity)
+        #self.drivingPIDController.setReference(optimizedDesiredState.speed, rev.SparkMax.ControlType.kVelocity)
         # self.turningPIDController.setReference(optimizedDesiredState.angle.radians(), rev.SparkMax.ControlType.kPosition)
-        self.drivingPIDController.setReference(value=0.5, ctrl=rev.SparkFlex.ControlType.kVelocity)
-        self.turningPIDController.setReference(value=0.5, ctrl=rev.SparkMax.ControlType.kPosition)
+        self.drivingPIDController.setReference(desiredState.speed, ctrl=rev.SparkFlex.ControlType.kVelocity)
+        self.turningPIDController.setReference(desiredState.angle.radians(), ctrl=rev.SparkMax.ControlType.kPosition)
 
         self.desiredState = desiredState
 

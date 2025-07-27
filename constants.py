@@ -25,12 +25,12 @@ kRearRightChassisAngularOffset = math.pi / 2
 
 # SPARK MAX CAN IDs
 kFrontLeftDrivingCanId = 2
-kRearLeftDrivingCanId = 8
-kFrontRightDrivingCanId = 4
-kRearRightDrivingCanId = 6
+kRearLeftDrivingCanId = 4
+kFrontRightDrivingCanId = 6
+kRearRightDrivingCanId = 8
 
-kFrontLeftTurningCanId = 3
-kRearLeftTurningCanId = 1
+kFrontLeftTurningCanId = 1
+kRearLeftTurningCanId = 3
 kFrontRightTurningCanId = 5
 kRearRightTurningCanId = 7
 
@@ -74,8 +74,8 @@ kTurningFF = 0
 kTurningMinOutput = -1
 kTurningMaxOutput = 1
 
-kDrivingMotorIdleMode: rev.SparkMax.IdleMode = rev.SparkMax.IdleMode.kCoast
-kTurningMotorIdleMode: rev.SparkMax.IdleMode = rev.SparkMax.IdleMode.kCoast
+kDrivingMotorIdleMode: rev.SparkMax.IdleMode = rev.SparkMax.IdleMode.kBrake
+kTurningMotorIdleMode: rev.SparkMax.IdleMode = rev.SparkMax.IdleMode.kBrake
 
 kDrivingMotorCurrentLimit = 50 # Amps
 kTurningMotorCurrentLimit = 20 # Amps
